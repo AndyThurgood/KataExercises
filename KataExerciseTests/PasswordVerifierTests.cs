@@ -6,12 +6,18 @@ namespace KataExercisesTests
 {
     public class PasswordVerifierTests
     {
+        private readonly PasswordVerifier _passwordVerifier;
+        
+        public PasswordVerifierTests()
+        {
+            _passwordVerifier = new PasswordVerifier();
+        }
+
         [Fact]
         public void Password_Verifier_Handles_Empty_Password()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify(string.Empty);
+            
+            Action action = () => _passwordVerifier.Verify(string.Empty);
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must not be null or empty", exception.Message);
@@ -20,9 +26,7 @@ namespace KataExercisesTests
         [Fact]
         public void Password_Verifier_Handles_Null_Password()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify(null);
+            Action action = () => _passwordVerifier.Verify(null);
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must not be null or empty", exception.Message);
@@ -31,9 +35,7 @@ namespace KataExercisesTests
         [Fact]
         public void Password_Verifier_Handles_Short_Password()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify("We1eWew");
+            Action action = () => _passwordVerifier.Verify("We1eWew");
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must be at least 8 chars", exception.Message);
@@ -42,9 +44,7 @@ namespace KataExercisesTests
         [Fact]
         public void Password_Verifier_Throws_When_No_Uppercase()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify("aaaaaaaaaaa1");
+            Action action = () => _passwordVerifier.Verify("aaaaaaaaaaa1");
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must contain at least one uppercse letter", exception.Message);
@@ -54,9 +54,7 @@ namespace KataExercisesTests
         [Fact]
         public void Password_Verifier_Throws_When_No_Lowercase()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify("AAAAAAAAAAAAA1");
+            Action action = () => _passwordVerifier.Verify("AAAAAAAAAAAAA1");
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must contain at least one lowercase letter", exception.Message);
@@ -65,9 +63,7 @@ namespace KataExercisesTests
         [Fact]
         public void Password_Verifier_Throws_When_No_Number()
         {
-            PasswordVerifier verifier = new PasswordVerifier();
-
-            Action action = () => verifier.Verify("AAAAaaaaaaaaa");
+            Action action = () => _passwordVerifier.Verify("AAAAaaaaaaaaa");
 
             Exception exception = Assert.Throws<Exception>(action);
             Assert.Equal("Password must contain at least one number", exception.Message);

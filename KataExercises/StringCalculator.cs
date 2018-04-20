@@ -39,7 +39,7 @@ namespace KataExercises
             // Edge case we have a duplicate delimeter (\n)
             if (splitNumbers.Length > 2)
             {
-                return SumNumbers(splitNumbers.Skip(1).Select(int.Parse));
+                return SumNumbers(splitNumbers.Skip(1).Select(int.Parse).ToList());
             }
 
             return SumNumbers(splitNumbers.Last());
@@ -52,7 +52,7 @@ namespace KataExercises
         /// <returns></returns>
         private int SumNumbers(string numberList)
         {
-            IEnumerable<int> targetNumbers = numberList.Split(_permittedDelimiters.ToArray()).Select(int.Parse).ToList();
+            List<int> targetNumbers = numberList.Split(_permittedDelimiters.ToArray()).Select(int.Parse).ToList();
             return SumNumbers(targetNumbers);
         }
 
@@ -61,7 +61,7 @@ namespace KataExercises
         /// </summary>
         /// <param name="numbers"></param>
         /// <returns></returns>
-        private int SumNumbers(IEnumerable<int> numbers)
+        private int SumNumbers(List<int> numbers)
         {
             if (numbers.Any(x => x < 0))
             {
