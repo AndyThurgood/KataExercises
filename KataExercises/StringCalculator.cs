@@ -4,15 +4,21 @@ using System.Linq;
 
 namespace KataExercises
 {
+    /// <summary>
+    /// String calculator instance.
+    /// </summary>
     public class Calculator
     {    
+        //Config/constants
         private readonly List<char> _permittedDelimiters = new List<char>{',', '\n'};
-        private readonly List<char> _delimiterDelimiters = new List<char> {'[', ']'};
+        private readonly List<char> _delimiterBoundaries = new List<char> {'[', ']'};
+        private string _exceptionMessage = "negatives not allowed ({0})";
         private const string DelimiterFlag = "//";
         private const int MaxValue = 1000;
         
         /// <summary>
-        /// Sums a delimited string of numbers
+        /// Sums a delimited string of numbers with optional
+        /// delimiter specification
         /// </summary>
         /// <param name="numberList"></param>
         /// <returns></returns>
@@ -82,7 +88,7 @@ namespace KataExercises
             
             //Handle and remove bracket seperators
             newDelimeter = string.Join(string.Empty, 
-                                       newDelimeter.Split(_delimiterDelimiters.ToArray(), 
+                                       newDelimeter.Split(_delimiterBoundaries.ToArray(), 
                                            StringSplitOptions.RemoveEmptyEntries));
             
             _permittedDelimiters.AddRange(newDelimeter.ToCharArray());
@@ -95,11 +101,9 @@ namespace KataExercises
         /// <exception cref="Exception"></exception>
         private void GenerateNegativeException(IEnumerable<int> negativeNumbers)
         {
-            string exceptionMessage = "negatives not allowed ({0})";
-
-            exceptionMessage = string.Format(exceptionMessage, string.Join(", ", negativeNumbers));
+            _exceptionMessage = string.Format(_exceptionMessage, string.Join(", ", negativeNumbers));
             
-            throw new Exception(exceptionMessage);
+            throw new Exception(_exceptionMessage);
         }
     }
 }
